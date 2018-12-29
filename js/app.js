@@ -1,9 +1,11 @@
 // Enemies our player must avoid
 class Enemy {
-    constructor(){
+    constructor(y){
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
+        this.x = 0; // @todo: expected always -100; 
+        this.y = y; 
     }
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
@@ -31,7 +33,9 @@ class Player {
 // Now instantiate your objects.
 
 // Place all enemy objects in an array called allEnemies
-const allEnemies = [];
+const floors = [60,140,225] // `y` values for each floor
+// We generate 3 new Enemyes for now...
+const allEnemies = floors.map(y => new Enemy(y));
 
 // Place the player object in a variable called player
 const player = new Player();
