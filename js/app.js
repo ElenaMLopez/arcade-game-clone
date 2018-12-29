@@ -1,15 +1,22 @@
+// Functions
+function getRandomInt(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 // Enemies our player must avoid
 class Enemy {
     constructor(y){
         // The image/sprite for our enemies, this uses
         // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
-        this.x = 0; // @todo: expected always -100; 
+        this.x = -100; // @todo: expected always -100; 
         this.y = y; 
+        this.speed = getRandomInt(50, 400); // speed 50-400; 
     }
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt){
+        this.x += (dt*this.speed);
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.        
