@@ -1,33 +1,48 @@
 // Functions
 
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * @see https://stackoverflow.com/a/1527820
+ * @param {number} min - The minimun value.
+ * @param {number} max - The maximun value.
+ * @return {number} - Random integer number between min/max.
+ */
 function getRandomInt(min, max) {
-    return Math.random() * (max - min) + min;
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Enemies our player must avoid
+/** Class representing an enemy. */
 class Enemy {
+    /**
+     * Create an enemy.
+     * @param {number} y - The y value.
+     */
     constructor(y){
-        // The image/sprite for our enemies, this uses
-        // a helper we've provided to easily load images
         this.sprite = 'images/enemy-bug.png';
-        this.x = -100; // @todo: expected always -100; 
+        this.x = -100;  
         this.y = y; 
-        this.speed = getRandomInt(50, 400); // speed 50-400; 
+        this.speed = getRandomInt(50, 400);
     }
-    // Update the enemy's position, required method for game
-    // Parameter: dt, a time delta between ticks
+    /**
+     * Update the enemy's position.
+     * @param {number} dt - a time delta between ticks
+     */
     update(dt){
-        console.log(this.x);
+        /* 
+        If the enemy is outside the board, it returns to the same spot it started. 
+        Else, the acceleration of the enemy' movement.     
+        */ 
         if (this.x >= 600) {
             this.x = -100; 
         } else {
             this.x += (dt*this.speed);
         }
-        // You should multiply any movement by the dt parameter
-        // which will ensure the game runs at the same speed for
-        // all computers.        
     }
-    // Draw the enemy on the screen, required method for game
+    /**
+     * Draw the enemy on the screen.
+     */
     render () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
