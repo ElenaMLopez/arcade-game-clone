@@ -1,4 +1,5 @@
 // Functions
+
 function getRandomInt(min, max) {
     return Math.random() * (max - min) + min;
 }
@@ -16,7 +17,12 @@ class Enemy {
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt){
-        this.x += (dt*this.speed);
+        console.log(this.x);
+        if (this.x >= 600) {
+            this.x = -100; 
+        } else {
+            this.x += (dt*this.speed);
+        }
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.        
