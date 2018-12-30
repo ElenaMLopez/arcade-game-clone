@@ -57,12 +57,29 @@ class Player {
         this.sprite = 'images/char-cat-girl.png';
         this.x = 200;  
         this.y = 400;
+        this.yStep = 85;
+        this.xStep = 100; 
     }
     /**
      * Update the player's position.
      */
     update(){
         const mapLimits = [ this.x >= 0, this.x <= 400, this.y >= -25, this.y <= 400 ];
+        // The player hits at least one enemy
+        if (allEnemies.some(enemy => {
+            const sameY = enemy.y === this.y;
+            const playerArea = {
+                min: this.x - (this.xStep/2),
+                max: this.x + (this.xStep/2)
+            }; 
+            const sameArea = enemy.x >= playerArea.min && enemy.x <= playerArea.max;
+            //console.log(enemy.x, this.x);
+            return sameY && sameArea;
+        })){
+            this.reset();
+            console.log("Collision!!")
+        }
+        
         if (this.y <= 0) {
             // Player reaches water!
             this.reset();
@@ -89,16 +106,14 @@ class Player {
      * @param {string} cmd - the pressed key.  
      */
     handleInput(cmd){
-        const yStep = 85;
-        const xStep = 100; 
         if (cmd === 'up'){
-            this.y -= yStep; 
+            this.y -= this.yStep; 
         } else if (cmd === 'down'){
-            this.y += yStep; 
+            this.y += this.yStep; 
         } else if (cmd === 'right'){
-            this.x += xStep; 
+            this.x += this.xStep; 
         } else if (cmd === 'left'){
-            this.x -= xStep; 
+            this.x -= this.xStep; 
         }
     }
 }
@@ -106,7 +121,7 @@ class Player {
 // Now instantiate your objects.
 
 // Place all enemy objects in an array called allEnemies
-const floors = [60,140,225] // `y` values for each floor
+const floors = [60,145,230] // `y` values for each floor
 // We generate 3 new Enemyes for now...
 const allEnemies = floors.map(y => new Enemy(y));
 
