@@ -57,7 +57,13 @@ class Player {
     }
     // This class requires an update(), render() and
     // a handleInput() method.
-    update(){}
+    update(){
+        const limits = [ this.x >= 0, this.x <= 400, this.y >= -25, this.y <= 400 ];
+        if (!limits.every(limit => limit)){
+            this.x = 200;  
+            this.y = 400;
+        }
+    }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
