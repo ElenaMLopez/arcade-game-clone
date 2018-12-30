@@ -48,25 +48,46 @@ class Enemy {
     }
 }
 
-// Now write your own player class
+/** Class representing the player. */
 class Player {
+     /**
+     * Create the player.
+     */
     constructor(){
         this.sprite = 'images/char-cat-girl.png';
         this.x = 200;  
         this.y = 400;
     }
-    // This class requires an update(), render() and
-    // a handleInput() method.
+    /**
+     * Update the player's position.
+     */
     update(){
-        const limits = [ this.x >= 0, this.x <= 400, this.y >= -25, this.y <= 400 ];
-        if (!limits.every(limit => limit)){
-            this.x = 200;  
-            this.y = 400;
+        const mapLimits = [ this.x >= 0, this.x <= 400, this.y >= -25, this.y <= 400 ];
+        if (this.y <= 0) {
+            // Player reaches water!
+            this.reset();
+        }
+        if (!mapLimits.every(limit => limit)){
+            this.reset();
         }
     }
+    /**
+     * Draw the player on the screen.
+     */
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+    /**
+     * Reset the player to the initial position.
+     */
+    reset() {
+        this.x = 200;  
+        this.y = 400;
+    }
+    /**
+     * Applies coordinates of player' movements through the keys.
+     * @param {string} cmd - the pressed key.  
+     */
     handleInput(cmd){
         const yStep = 85;
         const xStep = 100; 
