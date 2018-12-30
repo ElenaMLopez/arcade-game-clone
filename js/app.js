@@ -1,49 +1,78 @@
-// Enemies our player must avoid
-var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+// Functions
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-};
-
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-};
-
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-// Now write your own player class
-var Player = function (){
-    
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * @see https://stackoverflow.com/a/1527820
+ * @param {number} min - The minimun value.
+ * @param {number} max - The maximun value.
+ * @return {number} - Random integer number between min/max.
+ */
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// This class requires an update(), render() and
-// a handleInput() method.
-Player.prototype.update = function (){};
-Player.prototype.render = function (){};
+/** Class representing an enemy. */
+class Enemy {
+    /**
+     * Create an enemy.
+     * @param {number} y - The y value.
+     */
+    constructor(y){
+        this.sprite = 'images/enemy-bug.png';
+        this.x = -100;  
+        this.y = y; 
+        this.speed = getRandomInt(50, 400);
+    }
+    /**
+     * Update the enemy's position.
+     * @param {number} dt - a time delta between ticks
+     */
+    update(dt){
+        /* 
+        If the enemy is outside the board, it returns to the same spot it started. 
+        Else, the acceleration of the enemy' movement.     
+        */ 
+        if (this.x >= 600) {
+            this.x = -100; 
+        } else {
+            this.x += (dt*this.speed);
+        }
+    }
+    /**
+     * Draw the enemy on the screen.
+     */
+    render () {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+// Now write your own player class
+class Player {
+    constructor(){}
+    // This class requires an update(), render() and
+    // a handleInput() method.
+    update(){}
+    render(){}
+    handleInput(){}
+}
 
 // Now instantiate your objects.
 
 // Place all enemy objects in an array called allEnemies
-var allEnemies = [];
+const floors = [60,140,225] // `y` values for each floor
+// We generate 3 new Enemyes for now...
+const allEnemies = floors.map(y => new Enemy(y));
 
 // Place the player object in a variable called player
-var player = new Player();
+const player = new Player();
 
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+document.addEventListener('keyup', e => {
+    const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
