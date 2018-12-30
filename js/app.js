@@ -61,7 +61,19 @@ class Player {
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-    handleInput(){}
+    handleInput(cmd){
+        const yStep = 85;
+        const xStep = 100; 
+        if (cmd === 'up'){
+            this.y -= yStep; 
+        } else if (cmd === 'down'){
+            this.y += yStep; 
+        } else if (cmd === 'right'){
+            this.x += xStep; 
+        } else if (cmd === 'left'){
+            this.x -= xStep; 
+        }
+    }
 }
 
 // Now instantiate your objects.
