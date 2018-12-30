@@ -50,11 +50,17 @@ class Enemy {
 
 // Now write your own player class
 class Player {
-    constructor(){}
+    constructor(){
+        this.sprite = 'images/char-cat-girl.png';
+        this.x = 200;  
+        this.y = 400;
+    }
     // This class requires an update(), render() and
     // a handleInput() method.
     update(){}
-    render(){}
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
     handleInput(){}
 }
 
