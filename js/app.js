@@ -1,5 +1,7 @@
 // Variables
-const [scoreSlctr, lifeSlctr] = document.querySelectorAll("#score > p");
+
+const scoreSlctr = document.getElementById("score-value");
+const lifeSlctr = document.getElementById("life-value");
 const modalSlctr = document.getElementById("modal");
 const buttonSlctr = document.querySelector("button");
 
@@ -25,6 +27,18 @@ function showModal(){
 function hideModal (){
     modalSlctr.style.display = "none"; 
 };
+
+/**
+ * Duplicate array content. 
+ * @see: https://stackoverflow.com/a/33305263
+ * @param {array} list - list of items.
+ * @return {array} - list of duplicated items. 
+ */
+function duplicateElements(list) {
+    return list.reduce(function(res, current, index, array) {
+        return res.concat([current, current]);
+    }, []);
+}
 
 /** Class representing an enemy. */
 class Enemy {
@@ -72,16 +86,17 @@ class Player {
         this.y = 400;
         this.yStep = 85;
         this.xStep = 100; 
-        this.score = 0; 
+        this.score = 0;
+        this.scoreStep = 100;
         this.life = 3; 
     }
     
     updateScore(){
-        scoreSlctr.innerText = `Score: ${this.score}`;
+        scoreSlctr.innerText = `Score = ${this.score}`;
     }
     
     updateLives(){
-        lifeSlctr.innerText = `Lives x ${this.life}`
+        lifeSlctr.innerText = `${this.life}`
     }
     /**
      * Update the player's position.
@@ -104,7 +119,7 @@ class Player {
             
             if (this.life === 0){
                 showModal();
-                this.life = 3; 
+                this.life = 3;
             }
             this.updateLives();
             this.updateScore();
@@ -115,7 +130,7 @@ class Player {
         if (this.y <= 0) {
             
             // Score Text
-            this.score++; 
+            this.score += this.scoreStep; 
             this.updateScore();
             this.reset();
         }
@@ -158,7 +173,7 @@ class Player {
 // Place all enemy objects in an array called allEnemies
 const floors = [60,145,230] // `y` values for each floor
 // We generate 3 new Enemyes for now...
-const allEnemies = floors.map(y => new Enemy(y));
+const allEnemies = duplicateElements(floors).map(y => new Enemy(y));
 
 // Place the player object in a variable called player
 const player = new Player();

@@ -5,6 +5,30 @@ body {
     font-family: monospace, sans-serif;
 }
 
+canvas {
+    margin-top: -50px;
+}
+
+#score {
+    display: flex; 
+    justify-content: space-between;
+    width: 500px;
+    margin: 0 auto;
+    font-size: 1.5rem; 
+    color: yellow;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+}
+
+#score > div {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+#score img {
+    width: 30px;
+    margin-right: 5px;
+}
 
 #modal {
     display: none;
@@ -19,8 +43,8 @@ body {
 }
 
 #modal h1 {
-       margin-top: 350px;  
-       font-size: 3rem; 
+    margin-top: 350px;  
+    font-size: 3rem; 
 }
 
 #modal button {
