@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Effective JavaScript: Frogger</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <script src="js/resources.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/engine.js"></script>
-</body>
+   <head>
+      <meta charset="UTF-8">
+      <title>Effective JavaScript: Frogger</title>
+      <link rel="stylesheet" href="css/style.css">
+   </head>
+   <body>
+      <div id="score">
+         <p id="score-value">Score = 0
+         <p>
+         <div>
+            <img src="images/Heart.png" alt="heart icon">
+            <p id="life-value">3
+            <p>
+         </div>
+      </div>
+      <div id="modal">
+         <h1>Game Over!!</h1>
+         <button id="playAgain">Play Again</button>
+      </div>
+      <script src="js/resources.js"></script>
+      <script src="js/app.js"></script>
+      <script src="js/engine.js"></script>
+   </body>
 </html>
