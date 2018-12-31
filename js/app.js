@@ -1,3 +1,6 @@
+// Variables
+const [scoreSlctr, lifeSlctr] = document.querySelectorAll("#score > p");
+
 // Functions
 
 /**
@@ -59,6 +62,8 @@ class Player {
         this.y = 400;
         this.yStep = 85;
         this.xStep = 100; 
+        this.score = 0; 
+        this.life = 3; 
     }
     /**
      * Update the player's position.
@@ -73,15 +78,22 @@ class Player {
                 max: this.x + (this.xStep/2)
             }; 
             const sameArea = enemy.x >= playerArea.min && enemy.x <= playerArea.max;
-            //console.log(enemy.x, this.x);
             return sameY && sameArea;
         })){
+            // Life counter
+            this.life--;
+            this.score = 0; 
+            lifeSlctr.innerText = `Lives x ${this.life}`;
             this.reset();
             console.log("Collision!!")
         }
         
+        // Player reaches water!
         if (this.y <= 0) {
-            // Player reaches water!
+            
+            // Score Text
+            this.score++; 
+            scoreSlctr.innerText = `Score: ${this.score}`;
             this.reset();
         }
         if (!mapLimits.every(limit => limit)){
@@ -127,7 +139,6 @@ const allEnemies = floors.map(y => new Enemy(y));
 
 // Place the player object in a variable called player
 const player = new Player();
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
