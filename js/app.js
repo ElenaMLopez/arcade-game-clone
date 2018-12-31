@@ -1,5 +1,7 @@
 // Variables
 const [scoreSlctr, lifeSlctr] = document.querySelectorAll("#score > p");
+const modalSlctr = document.getElementById("modal");
+const buttonSlctr = document.querySelector("button");
 
 // Functions
 
@@ -15,6 +17,14 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function showModal(){
+    modalSlctr.style.display = "block"; 
+};
+
+function hideModal (){
+    modalSlctr.style.display = "none"; 
+};
 
 /** Class representing an enemy. */
 class Enemy {
@@ -65,6 +75,14 @@ class Player {
         this.score = 0; 
         this.life = 3; 
     }
+    
+    updateScore(){
+        scoreSlctr.innerText = `Score: ${this.score}`;
+    }
+    
+    updateLives(){
+        lifeSlctr.innerText = `Lives x ${this.life}`
+    }
     /**
      * Update the player's position.
      */
@@ -83,9 +101,14 @@ class Player {
             // Life counter
             this.life--;
             this.score = 0; 
-            lifeSlctr.innerText = `Lives x ${this.life}`;
+            
+            if (this.life === 0){
+                showModal();
+                this.life = 3; 
+            }
+            this.updateLives();
+            this.updateScore();
             this.reset();
-            console.log("Collision!!")
         }
         
         // Player reaches water!
@@ -93,7 +116,7 @@ class Player {
             
             // Score Text
             this.score++; 
-            scoreSlctr.innerText = `Score: ${this.score}`;
+            this.updateScore();
             this.reset();
         }
         if (!mapLimits.every(limit => limit)){
@@ -140,6 +163,9 @@ const allEnemies = floors.map(y => new Enemy(y));
 // Place the player object in a variable called player
 const player = new Player();
 
+
+// Events
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', e => {
@@ -151,4 +177,9 @@ document.addEventListener('keyup', e => {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
+});
+
+// buttonSlctr
+buttonSlctr.addEventListener("click", () => {
+    hideModal();
 });
